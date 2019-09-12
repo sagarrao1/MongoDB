@@ -1,14 +1,14 @@
 [
 {
-	"name": "Hitesh",
-	"email": "hitesh@hiteshchoudhary.com",
+	"name": "Sagar",
+	"email": "sagarrao1@gmail.com",
 	"contact": "9999999999",
 	"courseCount": 4,
 	"isVerified": true
 },
 {
-	"name": "Mark",
-	"email": "mark@example.com",
+	"name": "Ravi",
+	"email": "Ravi@example.com",
 	"contact": "9999999888",
 	"courseCount": 2,
 	"isVerified": false
