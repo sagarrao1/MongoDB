@@ -1,0 +1,130 @@
+
+
+
+MongoDB Enterprise > db.points.find()
+db.points.insert({  "name" : "sr", "card" : "citibank", "points" : 45 })
+db.points.insert({  "name" : "sg", "card" : "citibank", "points" : 890 })
+db.points.insert({ "name" : "sg", "card" : "hdfc", "points" : 90 })
+db.points.insert({  "name" : "sr", "card" : "hdfc", "points" : 9 })
+db.points.insert({  "name" : "sr", "card" : "icici", "points" : 89 })
+db.points.insert({  "name" : "sg", "card" : "icici", "points" : 7500 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function f1(){emit(this.name,this.points)}
+
+
+function f2(key, values) {return Array.sum(values)}
+
+
+
+
+
+
+db.points.mapReduce(f1,f2,{out:"results"})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#find total points per user
+db.points.mapReduce( 
+   function() { emit(this.name,this.points); }, 
+	
+   function(key, values) {return Array.sum(values)}, {  
+      out:"total" 
+   }
+)
+
+
+
+
+
+
+
+#find total points from card issuer bank
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+db.points.mapReduce( 
+   function() { emit(this.card,this.points); }, 
+	
+   function(key, values) {return Array.sum(values)}, {  
+      out:"total" 
+   }
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+#find total points from card issuer bank and display the results
+db.points.mapReduce( 
+   function() { emit(this.card,this.points); }, 
+	
+   function(key, values) {return Array.sum(values)}, {  
+      out:"total" 
+   }
+).find()
+
+
