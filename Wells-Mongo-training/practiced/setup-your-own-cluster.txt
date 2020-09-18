@@ -1,0 +1,52 @@
+config replicaset
+4 shards
+1 mongos
+
+# create the config replicaset
+start md c:\data\c1
+start md c:\data\c2
+start md c:\data\c3
+
+start mongod --dbpath c:\data\c1 --port 10000 --replSet cfg --configsvr
+start mongod --dbpath c:\data\c2 --port 20000 --replSet cfg --configsvr
+start mongod --dbpath c:\data\c3 --port 30000 --replSet cfg --configsvr
+
+start mongo --port 10000
+
+# create shard servers
+start md c:\data\s1
+start md c:\data\s2
+start md c:\data\s3
+start md c:\data\s4
+
+start mongod --dbpath c:\data\s1 --port 40001 --shardsvr
+start mongod --dbpath c:\data\s2 --port 40002 --shardsvr
+start mongod --dbpath c:\data\s3 --port 40003 --shardsvr
+start mongod --dbpath c:\data\s4 --port 40004 --shardsvr
+
+#start mongos and connect to it
+
+mongos --configdb cfg/localhost:10000
+
+#connect to mongos
+mongo
+
+#add shards to the cluster
+
+use admin
+sh.addShard("localhost:40001")
+sh.addShard("localhost:40002")
+
+#configure the shard key
+
+db.runCommand({"enablesharding":"bigdata"})
+
+db.runCommand({"shardcollection":"bigdata.aadhaar",key:{age:1}})
+
+use bigdata
+
+for(i=0;i<100000;i++){print(i);db.aadhaar.insert({"name":"ramesh".repeat(1000),"age":i%1000})}
+
+
+
+

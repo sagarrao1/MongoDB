@@ -1,0 +1,20 @@
+#On mongo client 1 run these two commands
+
+watchCursor = db.getSiblingDB("day8").employees.watch()
+
+while (!watchCursor.isExhausted()){
+   if (watchCursor.hasNext()){
+      printjson(watchCursor.next());
+   }
+   }
+
+
+#On mongo client 2 run these two commands.
+
+use day8
+db.employees.insertOne({"name":"Ramesh","eid":223})
+db.employees.insertOne({"name":"Ravi","eid":224})
+db.employees.insertOne({"name":"Ranga","eid":225})
+db.employees.deleteOne()
+db.employees.deleteOne()
+db.employees.deleteOne()

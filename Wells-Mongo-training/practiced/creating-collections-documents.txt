@@ -1,0 +1,25 @@
+#list databases
+>show dbs
+#create a database
+>use day1
+#create a collection
+#no explicit command
+#insert a document
+>db.wells.insert({"company":"wells fargo"})
+>db.wells.insert({"city":"Chennai"})
+#list databases
+>show dbs
+#list collections
+>show collections
+#count documents
+>db.wells.count()
+#print documents
+>db.wells.find()
+#insert a doc with _id
+>db.wells.insert({"_id":56,"city":"Chennai"})
+#print documents
+>db.wells.find()
+#insert a doc with duplicate _id
+>db.wells.insert({"_id":56,"city":"Chennai"})
+#find your current database.
+>db

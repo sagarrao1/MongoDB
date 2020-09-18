@@ -1,0 +1,47 @@
+{Name : Ramesh S
+Job : Consultant
+Clients : [Ibm, Intel, Cisco]
+Technologies : [Python , mongodb, machine learning]
+likes : [Travel, sports]
+Reference : Ramana Rao}
+{
+"name":"sonia","kids":2
+}
+
+{
+"name":"sonia","kid1":"priyanka","kid2":"rahul"
+}
+
+{
+"name":"sonia","kids":["priyanka","rahul"]
+}
+
+db.congress.insert(
+{
+"name":"sonia","kids":[
+	{"name":"priyanka","spouse":"wadra","kids":[]},
+	{"name":"rahul","job":""}
+	]
+})
+
+db.congress1.insert({"name":"priyanka","spouse":"wadra","kids":[]})
+
+db.congress1.insert({"name":"rahul","job":""})
+
+db.congress1.insert({"name":"sonia",
+kids:
+[ObjectId("5f471b57433f513a8ca7a735"),
+ObjectId("5f471b58433f513a8ca7a736")]
+
+})
+
+
+what is the name of second kid of sonia
+with embedding
+db.congress.findOne({"name":"sonia"}).kids[1].name
+With linking
+var secondkid = db.congress1.findOne({"name":"sonia"}).kids[1]._id
+db.congress1.findOne({"_id":j}).name
+
+
+

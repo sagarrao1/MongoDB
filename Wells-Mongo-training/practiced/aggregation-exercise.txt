@@ -1,0 +1,22 @@
+Aggregation sample data
+
+db.agg.insert({name:'Ramesh',skills:['Perl','PHP','Python']})
+db.agg.insert({name:'Ram',skills:['Perl','MongoDB','Python']})
+db.agg.insert({name:'Suresh',skills:['Perl','PHP','Java']})
+db.agg.insert({name:'Siva',skills:['C','PHP','C++']})
+db.agg.insert({name:'Harini',skills:['C#','PHP','HTML']})
+db.agg.insert({name:'Hari',skills:['C#']})
+db.agg.insert({name:'Harini',skills:['C#',"perl"]})
+db.agg.insert({name:'Harsitha',skills:['C#',"Perl"]})
+db.agg.insert({name:'Sudha',skills:['C',"Perl"]})
+db.agg.insert({name:'Lahari',skills:['C',"Perl"]})
+db.agg.insert({name:'Harish',skills:['C#','PHP','HTML','Python']})
+db.agg.insert({name:'Sita',skills:['C#','Perl','HTML','Python']})
+
+
+# Find the top 3 skills
+
+db.agg.aggregate([
+{$unwind:"$skills"},
+{$project:{"skill":"$skills"}}
+])

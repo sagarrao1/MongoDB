@@ -1,0 +1,502 @@
+Refer https://developer.mongodb.com/quickstart/java-setup-crud-operations for detailed examples
+Refer https://developer.mongodb.com/quickstart/java-aggregation-pipeline for Aggregation
+Refer https://mongodb.github.io/mongo-java-driver/4.0/driver/tutorials/gridfs/ for GridFS
+
+1. Open eclipse and create File > New > Java Project
+2. Name it and Save
+3. Right Click on the Project and New > Package.
+4. Name it as com.user.mongo
+5. Right Click on the package and New > Class
+6. Name it as MongoConnection
+7. A file called MongoConnection .java is opened.
+8. Copy-Paste the follwing code into it:
+package com.user.mongo;
+
+import com.mongodb.ConnectionString;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoClient;
+
+
+public class MongoConnction {
+	public static void main( String args[] ) {  
+	      
+	      // Creating a Mongo client 
+		  MongoClient mongoClient = MongoClients.create();
+		  //MongoClient mongoClient = MongoClients.create("mongodb://host1:27017");
+	      System.out.println("Connected to the database successfully");
+
+	}
+}
+
+9. Save the file.
+10. Download the following files from the given URLs:
+https://repo1.maven.org/maven2/org/mongodb/mongodb-driver-sync/4.0.1/mongodb-driver-sync-4.0.1.jar
+https://repo1.maven.org/maven2/org/mongodb/mongodb-driver-core/4.0.1/mongodb-driver-core-4.0.1.jar
+https://repo1.maven.org/maven2/org/mongodb/bson/4.0.1/bson-4.0.1.jar
+11. Right click on your Project and Build Path > Add External Achives..
+12. Select the downloaded files from file explorer menu.
+13. See that they are added to the Referenced Libraries folder in the project.
+14. Run the mongod server and then run the file.
+15. Create new Class DbConnection and copy the following code:
+package com.user.mongo;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoDatabase;
+
+public class DbConnection {
+	public static void main( String args[] ) {  
+	      
+	      // Creating a Mongo client 
+		  MongoClient mongoClient = MongoClients.create();
+	      System.out.println("Connected to the database successfully");
+	      
+	      //Connecting to Database
+	      MongoDatabase database = mongoClient.getDatabase("test");
+	      System.out.println("Connected to Database test");
+	}
+}
+16. Create new Class AccessCollection and copy the following code:
+package com.user.mongo;
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+public class AccessCollection {
+	public static void main(String args[]) {
+		  
+		//Creating a Mongo client 
+		  MongoClient mongoClient = MongoClients.create();
+	      System.out.println("Connected to the database successfully");
+	      
+	      //Connecting to Database
+	      MongoDatabase database = mongoClient.getDatabase("test");
+	      System.out.println("Connected to Database test");
+	      
+	      //Accessing Collection
+	      MongoCollection<Document> collection = database.getCollection("big");
+	      System.out.println("Accessed Collection big");
+	}
+
+}
+17. Create a new class InsertDocument and copy the follwing code:
+package com.user.mongo;
+
+import java.util.Arrays;
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+public class InsertDocument {
+	public static void main(String args[]) {
+		//Creating a Mongo client 
+		  MongoClient mongoClient = MongoClients.create();
+	      System.out.println("Connected to the database successfully");
+	      
+	      //Connecting to Database
+	      MongoDatabase database = mongoClient.getDatabase("test");
+	      System.out.println("Connected to Database test");
+	      
+	      //Accessing Collection
+	      MongoCollection<Document> collection = database.getCollection("big");
+	      System.out.println("Accessed Collection big");
+	      
+	      //Inserting Document to the Collection
+	      Document doc = new Document("name", "MongoDB")
+	                .append("type", "database")
+	                .append("count", 1)
+	                .append("versions", Arrays.asList("v3.2", "v3.0", "v2.6"))
+	                .append("info", new Document("x", 203).append("y", 102));
+	      
+	      collection.insertOne(doc);  // Inserts one document
+	      System.out.println("Document Inserted to collection big");
+	      
+	}
+
+}
+18.Create a class InsertMany and copy the follwing code:
+package com.user.mongo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+public class InsertMany {
+	public static void main(String args[]) {
+		//Creating a Mongo client 
+		  MongoClient mongoClient = MongoClients.create();
+	      System.out.println("Connected to the database successfully");
+	      
+	      //Connecting to Database
+	      MongoDatabase database = mongoClient.getDatabase("test");
+	      System.out.println("Connected to Database test");
+	      
+	      //Accessing Collection
+	      MongoCollection<Document> collection = database.getCollection("big");
+	      System.out.println("Accessed Collection big");
+	      
+	      //Insert Multiple Documents
+	      List<Document> documents = new ArrayList<Document>();
+	      for (int i = 0; i < 100; i++) {
+	          documents.add(new Document("i", i));
+	      }
+	      collection.insertMany(documents);  //inserts multiple docs
+	      System.out.println("Inserted multiple documents");
+	}
+
+}
+19. Create a class CountDocsInCollection and copy the follwing code:
+package com.user.mongo;
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+public class CountDocsInCollection {
+	public static void main(String args[]) {
+		//Creating a Mongo client 
+		  MongoClient mongoClient = MongoClients.create();
+	      System.out.println("Connected to the database successfully");
+	      
+	      //Connecting to Database
+	      MongoDatabase database = mongoClient.getDatabase("test");
+	      System.out.println("Connected to Database test");
+	      
+	      //Accessing Collection
+	      MongoCollection<Document> collection = database.getCollection("big");
+	      System.out.println("Accessed Collection big");
+	      
+	      //Counting Docs in a Collection
+	      System.out.printf("Total Documents in the Collection big: %d", collection.countDocuments());
+	}
+
+}
+20. Create a class QueryFirstDocInCollection and copy the following code:
+package com.user.mongo;
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+public class QueryFirstDocInCollection {
+	public static void main(String args[]) {
+		//Creating a Mongo client 
+		  MongoClient mongoClient = MongoClients.create();
+	      System.out.println("Connected to the database successfully");
+	      
+	      //Connecting to Database
+	      MongoDatabase database = mongoClient.getDatabase("test");
+	      System.out.println("Connected to Database test");
+	      
+	      //Accessing Collection
+	      MongoCollection<Document> collection = database.getCollection("big");
+	      System.out.println("Accessed Collection big");
+	      
+	      //Finding the fist document
+	      Document myDoc = collection.find().first();
+	      System.out.println(myDoc.toJson());
+	}
+
+}
+21. Create a class FindAllDocsInCollection and copy the following code:
+package com.user.mongo;
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+
+public class FindAllDocsInCollection {
+	public static void main (String argd[]) {
+		//Creating a Mongo client 
+		  MongoClient mongoClient = MongoClients.create();
+	      System.out.println("Connected to the database successfully");
+	      
+	      //Connecting to Database
+	      MongoDatabase database = mongoClient.getDatabase("test");
+	      System.out.println("Connected to Database test");
+	      
+	      //Accessing Collection
+	      MongoCollection<Document> collection = database.getCollection("big");
+	      System.out.println("Accessed Collection big");
+	      
+	      //Find All Documents in a Collection
+	      MongoCursor<Document> cursor = collection.find().iterator();
+	      try {
+	          while (cursor.hasNext()) {
+	              System.out.println(cursor.next().toJson());
+	          }
+	      } finally {
+	          cursor.close();
+	      }
+	      
+	      for (Document cur : collection.find()) {
+	    	    System.out.println(cur.toJson());
+	    	}
+	}
+
+}
+22. Create a class UpdateSingleDocument:
+package com.user.mongo;
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.set;
+
+public class UpdateSingleDocument {
+	public static void main (String argd[]) {
+		//Creating a Mongo client 
+		  MongoClient mongoClient = MongoClients.create();
+	      System.out.println("Connected to the database successfully");
+	      
+	      //Connecting to Database
+	      MongoDatabase database = mongoClient.getDatabase("test");
+	      System.out.println("Connected to Database test");
+	      
+	      //Accessing Collection
+	      MongoCollection<Document> collection = database.getCollection("big");
+	      System.out.println("Accessed Collection big");
+	      
+	      //Update Single Document
+	      collection.updateOne(eq("i", 10), set("i", 110));
+	      System.out.println("Document Updated");
+	}
+}
+
+23. Create class UpdateManyDocuments:
+package com.user.mongo;
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.UpdateResult;
+
+import static com.mongodb.client.model.Filters.lt;
+import static com.mongodb.client.model.Updates.inc;
+
+public class UpdateManyDocuments {
+	public static void main (String args[]) {
+		//Creating a Mongo client 
+		  MongoClient mongoClient = MongoClients.create();
+	      System.out.println("Connected to the database successfully");
+	      
+	      //Connecting to Database
+	      MongoDatabase database = mongoClient.getDatabase("test");
+	      System.out.println("Connected to Database test");
+	      
+	      //Accessing Collection
+	      MongoCollection<Document> collection = database.getCollection("big");
+	      System.out.println("Accessed Collection big");
+	      
+	      //Update Multiple Documents
+	      UpdateResult updateResult = collection.updateMany(lt("i", 100), inc("i", 100));
+	      System.out.printf("Updated %d %s", updateResult.getModifiedCount(), "documents");
+
+	}
+
+}
+
+24. DeleteOneDocument
+package com.user.mongo;
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+import static com.mongodb.client.model.Filters.eq;
+
+public class DeleteOneDocument {
+	public static void main (String args[]) {
+		//Creating a Mongo client 
+		  MongoClient mongoClient = MongoClients.create();
+	      System.out.println("Connected to the database successfully");
+	      
+	      //Connecting to Database
+	      MongoDatabase database = mongoClient.getDatabase("test");
+	      System.out.println("Connected to Database test");
+	      
+	      //Accessing Collection
+	      MongoCollection<Document> collection = database.getCollection("big");
+	      System.out.println("Accessed Collection big");
+	      
+	      //Delete One Document that matches a Filter
+	      collection.deleteOne(eq("i", 110));
+	      System.out.println("Deleted document with i equal to 10");
+	}
+
+}
+
+25. DeleteManyDocuments
+package com.user.mongo;
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.DeleteResult;
+
+import static com.mongodb.client.model.Filters.gte;
+
+public class DeleteManyDocuments {
+	public static void main (String args[]) {
+		//Creating a Mongo client 
+		  MongoClient mongoClient = MongoClients.create();
+	      System.out.println("Connected to the database successfully");
+	      
+	      //Connecting to Database
+	      MongoDatabase database = mongoClient.getDatabase("test");
+	      System.out.println("Connected to Database test");
+	      
+	      //Accessing Collection
+	      MongoCollection<Document> collection = database.getCollection("big");
+	      System.out.println("Accessed Collection big");
+	      
+	      //Delete All Documents that Match a Filter
+	      DeleteResult deleteResult = collection.deleteMany(gte("i", 100));
+	      System.out.printf("%d %s", deleteResult.getDeletedCount(), "Documents deleted");
+	}
+
+}
+26. ConnectToReplicaSet
+package com.user.mongo;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+
+public class ConnectToReplicaSet {
+	public static void main (String args[]) {
+		 MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017,localhost:27018,localhost:27019");
+		 // MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017,localhost:27018,localhost:27019/?replicaSet=myReplicaSet");
+		 /*
+		    MongoClient mongoClient = MongoClients.create(
+            MongoClientSettings.builder()
+                    .applyToClusterSettings(builder ->
+                            builder.hosts(Arrays.asList(
+                                    new ServerAddress("localhost", 27017),
+                                    new ServerAddress("localhost", 27018),
+                                    new ServerAddress("localhost", 27019))))
+                    .build());
+		  */
+		 System.out.println("Connected to the Replica Set");
+	}
+
+}
+
+27. ConnectToShardedCluster
+package com.user.mongo;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+
+public class ConnectToShardedCluster {
+	public static void main(String args[]) {
+		// Connect to single mongos instance
+		 MongoClient mongoClient = MongoClients.create( "mongodb://localhost:27017" );
+		 /*
+		  *Connect to Multiple mongos
+		  *MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017,localhost:27018");
+		  */
+		 /*
+		  *  MongoClient mongoClient = MongoClients.create(
+            MongoClientSettings.builder()
+                    .applyToClusterSettings(builder ->
+                            builder.hosts(Arrays.asList(
+                                    new ServerAddress("host1", 27017),
+                                    new ServerAddress("host2", 27017))))
+                    .build());
+		  */
+		 System.out.println("Connected to Sharded Cluster");
+	}
+
+}
+28. Aggregations:
+28.1: Download the dataset to C: drive: (Admin Privilege may be required)
+Download https://raw.githubusercontent.com/mongodb/docs-assets/drivers/restaurants.json
+28.2: Make sure mongod is running and run the follwing in the command prompt:
+mongoimport --db test --collection restaurants --drop --file C:\restaurants.json
+
+28.3: Create class Aggregation1
+package com.user.mongo;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.function.Consumer;
+
+import org.bson.Document;
+import org.bson.json.JsonWriterSettings;
+
+import com.mongodb.Block;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Accumulators;
+import com.mongodb.client.model.Aggregates;
+import com.mongodb.client.model.Filters;
+
+public class Aggregation1 {
+	public static void main (String args[]) {
+		//Creating a Mongo client 
+		  MongoClient mongoClient = MongoClients.create();
+	      System.out.println("Connected to the database successfully");
+	      
+	      //Connecting to Database
+	      MongoDatabase database = mongoClient.getDatabase("test");
+	      System.out.println("Connected to Database test");
+	      
+	      //Accessing Collection
+	      MongoCollection<Document> collection = database.getCollection("restaurants");
+	      System.out.println("Accessed Collection restaurants");
+	      
+	      //Aggregation to find all bakers by stars
+	      collection.aggregate(
+	    		  Arrays.asList(
+	    		          Aggregates.match(Filters.eq("categories", "Bakery")),
+	    		          Aggregates.group("$stars", Accumulators.sum("count", 1))
+	    		  )
+	    		).into(new ArrayList<>()).forEach(printDocuments());
+	      }
+	      
+		//This code prints the results of Aggregation
+	      private static Consumer<Document> printDocuments() {
+	          return doc -> System.out.println(doc.toJson(JsonWriterSettings.builder().indent(true).build()));
+	}
+
+} 

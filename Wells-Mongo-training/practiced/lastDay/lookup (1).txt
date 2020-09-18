@@ -1,0 +1,64 @@
+1. Create a collection post and insert the following data:
+
+docs = [{
+    "title" : "my first post",
+    "author" : "Jim",
+    "likes" : 5
+},
+{
+    "title" : "my second post",
+    "author" : "Jim",
+    "likes" : 2
+},
+{
+    "title" : "hello world",
+    "author" : "Joe",
+    "likes" : 3
+}]
+
+db.posts.insert(docs)
+-----------------------------------------------------------
+2. Create a collection comment and insert the following data:
+
+docs = [{
+    "postTitle" : "my first post",
+    "comment" : "great read",
+    "likes" : 3
+},
+{
+    "postTitle" : "my second post",
+    "comment" : "good info",
+    "likes" : 0
+},
+{
+    "postTitle" : "my second post",
+    "comment" : "i liked this post",
+    "likes" : 12
+},
+{
+    "postTitle" : "hello world",
+    "comment" : "not my favorite",
+    "likes" : 8
+},
+{
+    "postTitle" : "my last post",
+    "comment" : null,
+    "likes" : 0
+}]
+
+db.comments.insert(docs)
+
+-----------------------------------------
+Example-1
+
+db.posts.aggregate([
+    { $lookup:
+        {
+           from: "comments",
+           localField: "title",
+           foreignField: "postTitle",
+           as: "comments"
+        }
+    }
+])
+-----------------------------------------

@@ -1,0 +1,35 @@
+md c:\data\r1
+md c:\data\r2
+md c:\data\r3
+
+ports to use
+10000
+20000
+30000
+
+replica set name = wellsfargo
+
+mongod --dbpath c:\data\r1 --port 10000 -replSet wellsfargo
+mongod --dbpath c:\data\r2 --port 20000 -replSet wellsfargo
+mongod --dbpath c:\data\r3 --port 30000 -replSet wellsfargo
+
+verify the connectivity
+
+mongo --port 10000
+mongo --port 20000
+mongo --port 30000
+
+Configure
+On client 10000
+
+rs.initiate()
+rs.add("localhost:20000")
+rs.add("localhost:30000")
+
+rs.status()
+
+now create some new data on primary.
+
+On secondary
+rs.slaveOk()
+show dbs

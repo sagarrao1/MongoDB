@@ -1,0 +1,24 @@
+can you lookup projects and emps
+
+> db.projects.find()
+{ "_id" : ObjectId("5f4ccf1bdfe01ecf8ab897c3"), "name" : "HR", "pid" : 34 }
+{ "_id" : ObjectId("5f4ccf26dfe01ecf8ab897c4"), "name" : "Admin", "pid" : 345 }
+{ "_id" : ObjectId("5f4ccf34dfe01ecf8ab897c5"), "name" : "Tech", "pid" : 45 }
+
+
+> db.emps.find()
+{ "_id" : ObjectId("5f4ccf7cdfe01ecf8ab897c6"), "name" : "rajesh", "extn" : 4567, "pid" : 34 }
+{ "_id" : ObjectId("5f4ccf88dfe01ecf8ab897c7"), "name" : "smita", "extn" : 4568, "pid" : 34 }
+{ "_id" : ObjectId("5f4ccf9adfe01ecf8ab897c8"), "name" : "hari", "extn" : 4348, "pid" : 345 }
+{ "_id" : ObjectId("5f4ccfa4dfe01ecf8ab897c9"), "name" : "ranga", "extn" : 3348, "pid" : 345 }
+{ "_id" : ObjectId("5f4ccfb7dfe01ecf8ab897ca"), "name" : "vishal", "extn" : 2348, "pid" : 45 }
+{ "_id" : ObjectId("5f4ccfc2dfe01ecf8ab897cb"), "name" : "neeraj", "extn" : 2338, "pid" : 45 }
+db.projects.aggregate([
+{$lookup:{
+from:"emps",
+localField:"pid",
+foreignField:"pid",
+as:"members"
+}
+}
+])

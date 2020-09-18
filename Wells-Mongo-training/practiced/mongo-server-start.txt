@@ -1,0 +1,12 @@
+1. Start the server
+md C:\data\db\
+mongod
+
+2. Connect to the server
+mongo
+>db.version()
+
+3. Add mongod to the path
+
+4. List databases
+>show dbs
