@@ -1,2 +1,2 @@
-# MangoDB
-MangoDB practice
+# MongoDB
+MongoDB practice
